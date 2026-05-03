@@ -692,82 +692,40 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
 
       {/* Mobile Controls Overlay */}
       {(!showQuestion && !isAnimating) && (
-         <div className="absolute bottom-4 left-4 right-4 flex justify-between z-50 md:hidden opacity-75 select-none touch-none pointer-events-auto">
-            <div className="relative w-40 h-40">
-               <div className="absolute w-14 h-14 bg-black/60 border-2 border-white rounded flex justify-center items-center text-white top-0 left-1/2 -translate-x-1/2 active:bg-white/40"
-                  onPointerDown={(e) => {
-                     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-                     handleTouchStart('up');
-                  }}
-                  onPointerUp={(e) => {
-                     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-                     handleTouchEnd('up');
-                  }}
-                  onPointerCancel={() => handleTouchEnd('up')}
-                  onContextMenu={(e) => e.preventDefault()}
+         <div className="absolute bottom-6 left-6 right-6 flex justify-between z-50 md:hidden select-none" style={{ touchAction: 'none' }}>
+            <div className="flex gap-4">
+               <button 
+                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-white/50 shadow-lg"
+                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('left'); }}
+                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                  onMouseDown={(e) => { e.preventDefault(); handleTouchStart('left'); }}
+                  onMouseUp={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                  onMouseLeave={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
                >
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-               </div>
-               <div className="absolute w-14 h-14 bg-black/60 border-2 border-white rounded flex justify-center items-center text-white bottom-0 left-1/2 -translate-x-1/2 active:bg-white/40"
-                  onPointerDown={(e) => {
-                     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-                     handleTouchStart('down');
-                  }}
-                  onPointerUp={(e) => {
-                     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-                     handleTouchEnd('down');
-                  }}
-                  onPointerCancel={() => handleTouchEnd('down')}
-                  onContextMenu={(e) => e.preventDefault()}
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+               </button>
+               <button 
+                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-white/50 shadow-lg"
+                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('right'); }}
+                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                  onMouseDown={(e) => { e.preventDefault(); handleTouchStart('right'); }}
+                  onMouseUp={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                  onMouseLeave={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
                >
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-               </div>
-               <div className="absolute w-14 h-14 bg-black/60 border-2 border-white rounded flex justify-center items-center text-white left-0 top-1/2 -translate-y-1/2 active:bg-white/40"
-                  onPointerDown={(e) => {
-                     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-                     handleTouchStart('left');
-                  }}
-                  onPointerUp={(e) => {
-                     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-                     handleTouchEnd('left');
-                  }}
-                  onPointerCancel={() => handleTouchEnd('left')}
-                  onContextMenu={(e) => e.preventDefault()}
-               >
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-               </div>
-               <div className="absolute w-14 h-14 bg-black/60 border-2 border-white rounded flex justify-center items-center text-white right-0 top-1/2 -translate-y-1/2 active:bg-white/40"
-                  onPointerDown={(e) => {
-                     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-                     handleTouchStart('right');
-                  }}
-                  onPointerUp={(e) => {
-                     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-                     handleTouchEnd('right');
-                  }}
-                  onPointerCancel={() => handleTouchEnd('right')}
-                  onContextMenu={(e) => e.preventDefault()}
-               >
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-               </div>
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+               </button>
             </div>
             
-            <div className="flex gap-4 items-end pb-4 pr-2">
+            <div className="flex">
                <button 
-                  type="button"
-                  onPointerDown={(e) => {
-                     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-                     handleTouchStart('jump');
-                  }}
-                  onPointerUp={(e) => {
-                     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-                     handleTouchEnd('jump');
-                  }}
-                  onPointerCancel={() => handleTouchEnd('jump')}
-                  onContextMenu={(e) => e.preventDefault()}
-                  className="w-20 h-20 bg-black/60 border-2 border-white rounded-full flex items-center justify-center text-white backdrop-blur-sm font-pixel text-2xl active:bg-white/40 active:scale-95 transition-transform shadow-lg"
+                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-full flex justify-center items-center text-white active:bg-white/50 shadow-lg font-pixel text-xl"
+                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
+                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
+                  onMouseDown={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
+                  onMouseUp={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
+                  onMouseLeave={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
                >
-                  Z
+                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                </button>
             </div>
          </div>
