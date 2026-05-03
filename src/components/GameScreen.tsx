@@ -692,7 +692,7 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
 
       {/* Mobile Controls Overlay */}
       {(!showQuestion && !isAnimating) && (
-         <div className="absolute bottom-6 left-6 right-6 flex justify-between z-50 md:hidden select-none" style={{ touchAction: 'none' }}>
+         <div className="absolute bottom-6 left-6 right-6 flex justify-between z-50 lg:hidden select-none" style={{ touchAction: 'none' }}>
             <div className="flex gap-4">
                <button 
                   className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-white/50 shadow-lg"
