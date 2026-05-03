@@ -592,81 +592,87 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
 
       {/* Interactive Question Modal */}
       {showQuestion && (
-          <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-1 md:p-4 z-[60] pointer-events-auto">
-             <div className="bg-blue-900 border-2 md:border-4 border-white p-2 md:p-6 rounded-xl max-w-3xl w-full max-h-[96vh] flex flex-col text-white shadow-[4px_4px_0_rgba(0,0,0,1)] flex-shrink-0">
-                 <div className="flex justify-between items-center bg-blue-950 p-1 md:p-2 rounded border-b-2 md:border-b-4 border-white mb-1 md:mb-4 shrink-0">
-                    <h3 className="text-yellow-400 font-pixel text-[8px] md:text-sm">TANTANGAN MAS RUSDI !</h3>
-                    <div className="text-[10px] md:text-xs font-sans font-bold bg-white text-blue-900 px-2 py-0.5 rounded-full uppercase">{mode}</div>
+          <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-2 z-[60] pointer-events-auto">
+             <div className="bg-blue-900 border-2 sm:border-4 border-white p-2 sm:p-4 rounded-xl max-w-4xl w-[95%] h-[95vh] sm:h-auto sm:max-h-[85vh] flex flex-col text-white shadow-[4px_4px_0_rgba(0,0,0,1)]">
+                 <div className="flex justify-between items-center bg-blue-950 p-2 rounded border-b-2 sm:border-b-4 border-white mb-2 shrink-0">
+                    <h3 className="text-yellow-400 font-pixel text-[10px] sm:text-sm">TANTANGAN MAS RUSDI !</h3>
+                    <div className="text-[10px] sm:text-xs font-sans font-bold bg-white text-blue-900 px-2 py-0.5 rounded-full uppercase">{mode}</div>
                  </div>
                  
-                 <div className="font-sans mb-1 md:mb-4 bg-white/10 p-2 md:p-4 rounded border-l-2 md:border-l-4 border-yellow-400 shadow-inner overflow-y-auto shrink-0 max-h-[25vh] md:max-h-[35vh]">
-                    <p className="mb-1 md:mb-2 text-gray-200 leading-snug font-medium text-xs md:text-base">{currentQuestion.narasi}</p>
-                    <p className="font-bold text-sm md:text-lg text-yellow-300 drop-shadow-md leading-tight">{currentQuestion.pertanyaan}</p>
+                 <div className="flex flex-row gap-3 sm:gap-4 flex-1 min-h-0">
+                    
+                    {/* Left: Question Content */}
+                    <div className="w-1/2 flex flex-col font-sans bg-white/10 p-3 sm:p-4 rounded border-l-2 sm:border-l-4 border-yellow-400 shadow-inner overflow-y-auto">
+                        <p className="mb-2 text-gray-200 leading-snug font-medium text-xs sm:text-sm">{currentQuestion.narasi}</p>
+                        <p className="font-bold text-sm sm:text-base text-yellow-300 drop-shadow-md leading-tight mt-auto pt-2">{currentQuestion.pertanyaan}</p>
+                    </div>
+
+                    {/* Right: Options Content */}
+                    <div className="w-1/2 flex flex-col min-h-0">
+                        <div className="grid grid-cols-1 gap-2 overflow-y-auto flex-1 pr-1 pb-1">
+                            {currentQuestion.opsi.map((opt, i) => {
+                               const isSelected = selectedAnswer === i;
+                               const isCorrect = answerStatus !== 'idle' && i === currentQuestion.jawabanBenar;
+                               const isWrong = answerStatus === 'wrong' && isSelected;
+
+                               let btnClasses = "p-2 sm:p-3 rounded-lg border-b-2 sm:border-b-4 text-left transition-all flex items-center justify-between text-[11px] sm:text-sm ";
+                               
+                               if (answerStatus === 'idle') {
+                                   btnClasses += isSelected 
+                                      ? "bg-yellow-500 text-blue-900 border-yellow-700 " 
+                                      : "bg-blue-800 text-white border-blue-950 hover:bg-blue-700 hover:translate-y-1 hover:border-b-2 ";
+                               } else {
+                                   if (isCorrect) {
+                                       btnClasses += "bg-green-500 text-white border-green-700 scale-[1.02] sm:scale-105 ";
+                                   } else if (isWrong) {
+                                       btnClasses += "bg-red-500 text-white border-red-700 opacity-50 ";
+                                   } else {
+                                       btnClasses += "bg-blue-800 text-white border-blue-950 opacity-50 ";
+                                   }
+                               }
+
+                               return (
+                                   <button 
+                                      key={i} 
+                                      disabled={answerStatus !== 'idle'}
+                                      onClick={() => setSelectedAnswer(i)}
+                                      className={btnClasses}
+                                   >
+                                      <span className="flex items-center gap-1.5 sm:gap-3">
+                                         <span className="bg-black/20 w-5 h-5 sm:w-6 sm:h-6 shrink-0 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold">{['A', 'B', 'C', 'D'][i]}</span>
+                                         <span className="leading-tight">{opt}</span>
+                                      </span>
+                                      {isCorrect && <svg className="text-white shrink-0 ml-1 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+                                      {isWrong && <svg className="text-white shrink-0 ml-1 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                                   </button>
+                               )
+                            })}
+                        </div>
+
+                         {answerStatus === 'idle' && (
+                             <div className="mt-2 flex justify-end shrink-0 pt-2 border-t border-blue-800/50">
+                                 <button 
+                                     disabled={selectedAnswer === null}
+                                     onClick={handleAnswerSubmit}
+                                     className={`font-pixel py-1.5 px-4 sm:py-3 sm:px-6 rounded border-2 sm:border-4 transition-all flex items-center gap-2 text-[10px] sm:text-sm ${selectedAnswer !== null ? 'bg-green-500 border-white text-white hover:bg-green-600 hover:scale-105 shadow-[2px_2px_0_rgba(0,0,0,1)]' : 'bg-gray-500 border-gray-400 text-gray-300 opacity-50 cursor-not-allowed'}`}
+                                 >
+                                     JAWAB <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                 </button>
+                             </div>
+                         )}
+
+                         {answerStatus === 'wrong' && (
+                             <div className="mt-2 text-center animate-bounce shrink-0">
+                                 <p className="font-pixel text-red-400 text-xs sm:text-sm drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">YAH SALAH! NYAWA -1</p>
+                             </div>
+                         )}
+                         {answerStatus === 'correct' && (
+                             <div className="mt-2 text-center animate-bounce shrink-0">
+                                 <p className="font-pixel text-green-400 text-xs sm:text-sm drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">BENAR! SCORE +500</p>
+                             </div>
+                         )}
+                    </div>
                  </div>
-
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-3 font-sans font-semibold overflow-y-auto flex-1">
-                    {currentQuestion.opsi.map((opt, i) => {
-                       const isSelected = selectedAnswer === i;
-                       const isCorrect = answerStatus !== 'idle' && i === currentQuestion.jawabanBenar;
-                       const isWrong = answerStatus === 'wrong' && isSelected;
-
-                       let btnClasses = "p-1.5 md:p-3 rounded-lg border-b-2 md:border-b-4 text-left transition-all flex items-center justify-between text-xs md:text-base ";
-                       
-                       if (answerStatus === 'idle') {
-                           btnClasses += isSelected 
-                              ? "bg-yellow-500 text-blue-900 border-yellow-700 " 
-                              : "bg-blue-800 text-white border-blue-950 hover:bg-blue-700 hover:translate-y-1 hover:border-b-2 ";
-                       } else {
-                           if (isCorrect) {
-                               btnClasses += "bg-green-500 text-white border-green-700 scale-[1.02] md:scale-105 ";
-                           } else if (isWrong) {
-                               btnClasses += "bg-red-500 text-white border-red-700 opacity-50 ";
-                           } else {
-                               btnClasses += "bg-blue-800 text-white border-blue-950 opacity-50 ";
-                           }
-                       }
-
-                       return (
-                           <button 
-                              key={i} 
-                              disabled={answerStatus !== 'idle'}
-                              onClick={() => setSelectedAnswer(i)}
-                              className={btnClasses}
-                           >
-                              <span className="flex items-center gap-1.5 md:gap-3">
-                                 <span className="bg-black/20 w-5 h-5 md:w-8 md:h-8 shrink-0 rounded-full flex items-center justify-center text-[10px] md:text-sm">{['A', 'B', 'C', 'D'][i]}</span>
-                                 <span className="leading-tight">{opt}</span>
-                              </span>
-                              {isCorrect && <svg className="text-white shrink-0 ml-1 w-4 h-4 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
-                              {isWrong && <svg className="text-white shrink-0 ml-1 w-4 h-4 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
-                           </button>
-                       )
-                    })}
-                 </div>
-
-                 {answerStatus === 'idle' && (
-                     <div className="mt-2 md:mt-4 flex justify-end shrink-0">
-                         <button 
-                             disabled={selectedAnswer === null}
-                             onClick={handleAnswerSubmit}
-                             className={`font-pixel py-1.5 px-4 md:py-3 md:px-8 rounded border-2 md:border-4 transition-all flex items-center gap-2 text-[10px] md:text-base ${selectedAnswer !== null ? 'bg-green-500 border-white text-white hover:bg-green-600 hover:scale-105 shadow-[2px_2px_0_rgba(0,0,0,1)]' : 'bg-gray-500 border-gray-400 text-gray-300 opacity-50 cursor-not-allowed'}`}
-                         >
-                             JAWAB <svg className="w-3 h-3 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                         </button>
-                     </div>
-                 )}
-
-                 {answerStatus === 'wrong' && (
-                     <div className="mt-2 text-center animate-bounce shrink-0">
-                         <p className="font-pixel text-red-400 text-xs md:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">YAH SALAH! NYAWA -1</p>
-                     </div>
-                 )}
-                 {answerStatus === 'correct' && (
-                     <div className="mt-2 text-center animate-bounce shrink-0">
-                         <p className="font-pixel text-green-400 text-xs md:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">BENAR! SCORE +500</p>
-                     </div>
-                 )}
-
              </div>
           </div>
       )}
