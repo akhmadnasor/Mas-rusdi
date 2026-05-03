@@ -326,25 +326,6 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
     }
   };
 
-  // Render SVG Mouse instead of using image to ensure we have a mouse
-  const TikusPixel = () => (
-      <svg width="40" height="24" viewBox="0 0 40 24" className="rendering-pixelated drop-shadow-md">
-        {/* Body */}
-        <rect x="10" y="10" width="20" height="12" fill="#757575" />
-        {/* Head */}
-        <rect x="0" y="12" width="10" height="10" fill="#757575" />
-        <rect x="4" y="14" width="2" height="2" fill="black" /> {/* Eye */}
-        {/* Ears */}
-        <rect x="6" y="8" width="4" height="4" fill="#616161" />
-        <rect x="8" y="10" width="2" height="2" fill="#E0E0E0" />
-        {/* Tail */}
-        <rect x="30" y="18" width="8" height="2" fill="#9E9E9E" />
-        {/* Legs */}
-        <rect x="12" y="22" width="4" height="2" fill="#424242" />
-        <rect x="24" y="22" width="4" height="2" fill="#424242" />
-      </svg>
-  );
-
   if (!currentQuestion) {
     return <div className="absolute inset-0 bg-black flex items-center justify-center text-white font-pixel">Loading...</div>;
   }
@@ -611,25 +592,25 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
 
       {/* Interactive Question Modal */}
       {showQuestion && (
-          <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-2 md:p-4 z-50 pointer-events-auto">
-             <div className="bg-blue-900 border-4 border-white p-3 md:p-8 rounded-xl max-w-3xl w-full max-h-[96vh] flex flex-col text-white shadow-[8px_8px_0_rgba(0,0,0,1)]">
-                 <div className="flex justify-between items-center bg-blue-950 p-2 md:p-3 rounded border-b-4 border-white mb-2 md:mb-6 shrink-0">
-                    <h3 className="text-yellow-400 font-pixel text-xs md:text-base">TANTANGAN MAS RUSDI !</h3>
-                    <div className="text-xs md:text-sm font-sans font-bold bg-white text-blue-900 px-2 py-1 rounded-full uppercase">{mode}</div>
+          <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-1 md:p-4 z-[60] pointer-events-auto">
+             <div className="bg-blue-900 border-2 md:border-4 border-white p-2 md:p-6 rounded-xl max-w-3xl w-full max-h-[96vh] flex flex-col text-white shadow-[4px_4px_0_rgba(0,0,0,1)] flex-shrink-0">
+                 <div className="flex justify-between items-center bg-blue-950 p-1 md:p-2 rounded border-b-2 md:border-b-4 border-white mb-1 md:mb-4 shrink-0">
+                    <h3 className="text-yellow-400 font-pixel text-[8px] md:text-sm">TANTANGAN MAS RUSDI !</h3>
+                    <div className="text-[10px] md:text-xs font-sans font-bold bg-white text-blue-900 px-2 py-0.5 rounded-full uppercase">{mode}</div>
                  </div>
                  
-                 <div className="font-sans mb-2 md:mb-6 bg-white/10 p-3 md:p-4 rounded text-sm md:text-lg border-l-4 border-yellow-400 shadow-inner overflow-y-auto shrink-0 max-h-[35vh]">
-                    <p className="mb-2 md:mb-4 text-gray-200 leading-snug md:leading-relaxed font-medium">{currentQuestion.narasi}</p>
-                    <p className="font-bold text-base md:text-xl text-yellow-300 drop-shadow-md">{currentQuestion.pertanyaan}</p>
+                 <div className="font-sans mb-1 md:mb-4 bg-white/10 p-2 md:p-4 rounded border-l-2 md:border-l-4 border-yellow-400 shadow-inner overflow-y-auto shrink-0 max-h-[25vh] md:max-h-[35vh]">
+                    <p className="mb-1 md:mb-2 text-gray-200 leading-snug font-medium text-xs md:text-base">{currentQuestion.narasi}</p>
+                    <p className="font-bold text-sm md:text-lg text-yellow-300 drop-shadow-md leading-tight">{currentQuestion.pertanyaan}</p>
                  </div>
 
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 font-sans font-semibold overflow-y-auto">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-3 font-sans font-semibold overflow-y-auto flex-1">
                     {currentQuestion.opsi.map((opt, i) => {
                        const isSelected = selectedAnswer === i;
                        const isCorrect = answerStatus !== 'idle' && i === currentQuestion.jawabanBenar;
                        const isWrong = answerStatus === 'wrong' && isSelected;
 
-                       let btnClasses = "p-2 md:p-4 rounded-lg border-b-4 text-left transition-all flex items-center justify-between text-sm md:text-base ";
+                       let btnClasses = "p-1.5 md:p-3 rounded-lg border-b-2 md:border-b-4 text-left transition-all flex items-center justify-between text-xs md:text-base ";
                        
                        if (answerStatus === 'idle') {
                            btnClasses += isSelected 
@@ -652,37 +633,37 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
                               onClick={() => setSelectedAnswer(i)}
                               className={btnClasses}
                            >
-                              <span className="flex items-center gap-2 md:gap-3">
-                                 <span className="bg-black/20 w-6 h-6 md:w-8 md:h-8 shrink-0 rounded-full flex items-center justify-center text-xs md:text-sm">{['A', 'B', 'C', 'D'][i]}</span>
-                                 <span>{opt}</span>
+                              <span className="flex items-center gap-1.5 md:gap-3">
+                                 <span className="bg-black/20 w-5 h-5 md:w-8 md:h-8 shrink-0 rounded-full flex items-center justify-center text-[10px] md:text-sm">{['A', 'B', 'C', 'D'][i]}</span>
+                                 <span className="leading-tight">{opt}</span>
                               </span>
-                              {isCorrect && <CheckCircle2 className="text-white shrink-0 ml-2 w-5 h-5 md:w-6 md:h-6" />}
-                              {isWrong && <XCircle className="text-white shrink-0 ml-2 w-5 h-5 md:w-6 md:h-6" />}
+                              {isCorrect && <svg className="text-white shrink-0 ml-1 w-4 h-4 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+                              {isWrong && <svg className="text-white shrink-0 ml-1 w-4 h-4 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
                            </button>
                        )
                     })}
                  </div>
 
                  {answerStatus === 'idle' && (
-                     <div className="mt-4 md:mt-8 flex justify-end shrink-0">
+                     <div className="mt-2 md:mt-4 flex justify-end shrink-0">
                          <button 
                              disabled={selectedAnswer === null}
                              onClick={handleAnswerSubmit}
-                             className={`font-pixel py-2 px-6 md:py-3 md:px-8 rounded border-4 transition-all flex items-center gap-2 text-sm md:text-base ${selectedAnswer !== null ? 'bg-green-500 border-white text-white hover:bg-green-600 hover:scale-105 shadow-[4px_4px_0_rgba(0,0,0,1)]' : 'bg-gray-500 border-gray-400 text-gray-300 opacity-50 cursor-not-allowed'}`}
+                             className={`font-pixel py-1.5 px-4 md:py-3 md:px-8 rounded border-2 md:border-4 transition-all flex items-center gap-2 text-[10px] md:text-base ${selectedAnswer !== null ? 'bg-green-500 border-white text-white hover:bg-green-600 hover:scale-105 shadow-[2px_2px_0_rgba(0,0,0,1)]' : 'bg-gray-500 border-gray-400 text-gray-300 opacity-50 cursor-not-allowed'}`}
                          >
-                             JAWAB <ArrowRight size={20} />
+                             JAWAB <svg className="w-3 h-3 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                          </button>
                      </div>
                  )}
 
                  {answerStatus === 'wrong' && (
-                     <div className="mt-4 md:mt-6 text-center animate-bounce shrink-0">
-                         <p className="font-pixel text-red-400 text-base md:text-xl drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">YAH SALAH! NYAWA -1</p>
+                     <div className="mt-2 text-center animate-bounce shrink-0">
+                         <p className="font-pixel text-red-400 text-xs md:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">YAH SALAH! NYAWA -1</p>
                      </div>
                  )}
                  {answerStatus === 'correct' && (
-                     <div className="mt-4 md:mt-6 text-center animate-bounce shrink-0">
-                         <p className="font-pixel text-green-400 text-base md:text-xl drop-shadow-[2px_2px_0_rgba(0,0,0,1)]">BENAR! SCORE +500</p>
+                     <div className="mt-2 text-center animate-bounce shrink-0">
+                         <p className="font-pixel text-green-400 text-xs md:text-xl drop-shadow-[1px_1px_0_rgba(0,0,0,1)]">BENAR! SCORE +500</p>
                      </div>
                  )}
 
@@ -695,7 +676,7 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
          <div className="absolute bottom-6 left-6 right-6 flex justify-between z-50 lg:hidden select-none" style={{ touchAction: 'none' }}>
             <div className="flex gap-4">
                <button 
-                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-white/50 shadow-lg"
+                  className="w-16 h-16 bg-red-500/80 border-2 border-red-400 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-red-600 shadow-lg"
                   onTouchStart={(e) => { e.preventDefault(); handleTouchStart('left'); }}
                   onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
                   onMouseDown={(e) => { e.preventDefault(); handleTouchStart('left'); }}
@@ -705,7 +686,7 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                </button>
                <button 
-                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-white/50 shadow-lg"
+                  className="w-16 h-16 bg-blue-500/80 border-2 border-blue-400 backdrop-blur-md rounded-xl flex justify-center items-center text-white active:bg-blue-600 shadow-lg"
                   onTouchStart={(e) => { e.preventDefault(); handleTouchStart('right'); }}
                   onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
                   onMouseDown={(e) => { e.preventDefault(); handleTouchStart('right'); }}
@@ -718,7 +699,7 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
             
             <div className="flex">
                <button 
-                  className="w-16 h-16 bg-white/20 border-2 border-white/50 backdrop-blur-md rounded-full flex justify-center items-center text-white active:bg-white/50 shadow-lg font-pixel text-xl"
+                  className="w-16 h-16 bg-yellow-500/90 border-2 border-yellow-400 backdrop-blur-md rounded-full flex justify-center items-center text-yellow-950 active:bg-yellow-600 shadow-lg"
                   onTouchStart={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
                   onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
                   onMouseDown={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
