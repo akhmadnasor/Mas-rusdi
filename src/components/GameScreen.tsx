@@ -695,30 +695,34 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
          <div className="absolute bottom-6 left-4 right-4 flex justify-between z-20 md:hidden opacity-50 select-none touch-none">
             <div className="relative w-36 h-36">
                <div className="absolute w-12 h-12 bg-black/50 border-2 border-white rounded flex justify-center items-center text-white top-0 left-1/2 -translate-x-1/2 active:bg-white/30"
-                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('up'); }}
-                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('up'); }}
-                  onTouchCancel={(e) => { e.preventDefault(); handleTouchEnd('up'); }}
+                  onPointerDown={(e) => { e.preventDefault(); handleTouchStart('up'); }}
+                  onPointerUp={(e) => { e.preventDefault(); handleTouchEnd('up'); }}
+                  onPointerCancel={(e) => { e.preventDefault(); handleTouchEnd('up'); }}
+                  onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd('up'); }}
                >
                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                </div>
                <div className="absolute w-12 h-12 bg-black/50 border-2 border-white rounded flex justify-center items-center text-white bottom-0 left-1/2 -translate-x-1/2 active:bg-white/30"
-                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('down'); }}
-                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('down'); }}
-                  onTouchCancel={(e) => { e.preventDefault(); handleTouchEnd('down'); }}
+                  onPointerDown={(e) => { e.preventDefault(); handleTouchStart('down'); }}
+                  onPointerUp={(e) => { e.preventDefault(); handleTouchEnd('down'); }}
+                  onPointerCancel={(e) => { e.preventDefault(); handleTouchEnd('down'); }}
+                  onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd('down'); }}
                >
                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                </div>
                <div className="absolute w-12 h-12 bg-black/50 border-2 border-white rounded flex justify-center items-center text-white left-0 top-1/2 -translate-y-1/2 active:bg-white/30"
-                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('left'); }}
-                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
-                  onTouchCancel={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                  onPointerDown={(e) => { e.preventDefault(); handleTouchStart('left'); }}
+                  onPointerUp={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                  onPointerCancel={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
+                  onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd('left'); }}
                >
                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                </div>
                <div className="absolute w-12 h-12 bg-black/50 border-2 border-white rounded flex justify-center items-center text-white right-0 top-1/2 -translate-y-1/2 active:bg-white/30"
-                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('right'); }}
-                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
-                  onTouchCancel={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                  onPointerDown={(e) => { e.preventDefault(); handleTouchStart('right'); }}
+                  onPointerUp={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                  onPointerCancel={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
+                  onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd('right'); }}
                >
                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                </div>
@@ -726,9 +730,11 @@ export default function GameScreen({ mode, onHome }: GameScreenProps) {
             
             <div className="flex gap-4 items-end pb-2">
                <button 
-                  onTouchStart={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
-                  onTouchEnd={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
-                  onTouchCancel={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
+                  type="button"
+                  onPointerDown={(e) => { e.preventDefault(); handleTouchStart('jump'); }}
+                  onPointerUp={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
+                  onPointerCancel={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
+                  onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd('jump'); }}
                   className="w-16 h-16 bg-black/50 border-2 border-white rounded-full flex items-center justify-center text-white backdrop-blur-sm font-pixel text-xl active:bg-white/30 active:scale-95 transition-transform"
                >
                   Z
